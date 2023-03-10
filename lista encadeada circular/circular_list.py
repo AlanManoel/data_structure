@@ -38,7 +38,18 @@ class circular_list:
             self.append(value)
     
     def pop(self):
-        pass
+        if (self.size > 1):
+            pointer = self.first
+            while(pointer.next != self.last):
+                pointer = pointer.next
+            pointer.next = self.first
+            self.last = pointer
+            self.size -= 1
+        else:
+            self.first = None
+            self.last = None
+            self.size -= 1
+
 
     def remove(self, value):
         pass
