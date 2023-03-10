@@ -13,10 +13,34 @@ class circular_list:
             self.last.next = node
             node.next = self.first
             self.last = node
+            self.size += 1
         else:
             self.first = self.last = Node(value)
             self.last.next = self.first
             self.size += 1
+
+    def insert(self, index, value):
+        '''Função de inserção de valor pelo index'''
+        if (index <= 0):
+            node = Node(value)
+            node.next = self.first
+            self.first = node
+            self.last.next = self.first
+            self.size += 1
+        elif (index <= self.size):
+            pass
+        else:
+            self.append(value)
+    
+            
+    def pop(self):
+        pass
+
+    def remove(self, value):
+        pass
+
+    def index(self, value):
+        pass
 
     def __repr__(self):
         '''Função para retorna a lista'''
