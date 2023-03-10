@@ -9,3 +9,4 @@ a.append(3)
 
 print(a)
 
+print(len(a))
