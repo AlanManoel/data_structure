@@ -40,6 +40,7 @@ class circular_list:
         
 
     def pop(self):
+        '''Função de remover o ultimo elemento'''
         if (self.size > 1):
             pointer = self.first
             while(pointer.next != self.last):
@@ -52,9 +53,28 @@ class circular_list:
             self.last = None
             self.size -= 1
 
-
     def remove(self, value):
-        pass
+        '''Função de remover pelo valor'''
+        if (self.size > 0):
+            pointer = self.first
+            if (pointer.value == value):
+                self.first = pointer.next
+                self.last.next = self.first
+                self.size -= 1
+            else:
+                while(pointer):
+                    if(pointer.next.value == value):
+                        if (pointer.next == self.last):
+                            pointer.next = self.first
+                            self.last= pointer
+                            self.size -= 1
+                            break
+                        else:
+                            pointer.next = pointer.next.next
+                            self.size -= 1
+                            break
+                    else:
+                        pointer = pointer.next
 
     def index(self, value):
         pass
