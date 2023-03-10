@@ -34,9 +34,11 @@ class circular_list:
             node = Node(value)
             node.next = pointer.next
             pointer.next = node
+            self.size += 1
         else:
             self.append(value)
-    
+        
+
     def pop(self):
         if (self.size > 1):
             pointer = self.first
