@@ -28,11 +28,15 @@ class circular_list:
             self.last.next = self.first
             self.size += 1
         elif (index <= self.size):
-            pass
+            pointer = self.first
+            for cont in range(index - 1):
+                pointer = pointer.next
+            node = Node(value)
+            node.next = pointer.next
+            pointer.next = node
         else:
             self.append(value)
     
-            
     def pop(self):
         pass
 
