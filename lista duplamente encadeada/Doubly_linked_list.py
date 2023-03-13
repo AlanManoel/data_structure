@@ -18,6 +18,36 @@ class Doubly_linked_list:
             pointer.right = node
             self.size += 1
 
+    def insert(self, index, value):
+        if (index <= 0):
+            pointer = self.list
+            node = Node(value)
+            node.right = pointer
+            pointer.left = node
+            self.list = node
+            self.size += 1
+        elif (index <= self.size):
+            node = Node(value)
+            pointer = self.list
+            for cont in range(index - 1):
+                pointer = pointer.right
+            node.left = pointer
+            node.right = pointer.right
+            pointer.right.left = node
+            pointer.right = node
+            self.size += 1
+        else:
+            self.append(value)
+    
+    def pop(self):
+        pass
+
+    def remove(self,  value):
+        pass
+
+    def index(self, index):
+        pass
+
     def __repr__(self):
         if (self.size > 0):
             pointer = self.list
