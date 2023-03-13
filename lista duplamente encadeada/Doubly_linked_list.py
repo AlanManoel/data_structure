@@ -6,6 +6,7 @@ class Doubly_linked_list:
         self.size = 0
 
     def append(self, value):
+        '''Função para adicionar no fim da fila'''
         if (self.list == None):
             self.list = Node(value)
             self.size += 1
@@ -19,6 +20,7 @@ class Doubly_linked_list:
             self.size += 1
 
     def insert(self, index, value):
+        '''Função de inserir no index desejado'''
         if (index <= 0):
             pointer = self.list
             node = Node(value)
@@ -40,8 +42,18 @@ class Doubly_linked_list:
             self.append(value)
     
     def pop(self):
-        pass
-
+        '''Função de remover no fim da fila'''
+        if (self.size > 1):
+            pointer = self.list
+            while(pointer.right.right):
+                pointer = pointer.right
+            pointer.right.left = None
+            pointer.right = None
+            self.size -= 1
+        elif (self.size == 1):
+            self.list = None
+            self.size -= 1
+        
     def remove(self,  value):
         pass
 
@@ -57,7 +69,7 @@ class Doubly_linked_list:
                 pointer = pointer.right
             return r
         else:
-            return " "
+            return "Empty list "
         
     def __str__(self):
         return self.__repr__()
