@@ -17,6 +17,7 @@ class circular_list:
         else:
             self.first = self.last = Node(value)
             self.last.next = self.first
+            self.first.next = self.last
             self.size += 1
 
     def insert(self, index, value):
