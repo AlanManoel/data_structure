@@ -22,6 +22,7 @@ class lista:
             node = Node(valor)
             node.next = ponteiro
             self.lista = node
+            self.size +=1
         elif (index <= self.size):  
             ponteiro = self.lista
             node = Node(valor)
@@ -29,9 +30,10 @@ class lista:
                 ponteiro = ponteiro.next
             node.next = ponteiro.next
             ponteiro.next=node
+            self.size +=1
         else:
             self.append(valor)
-        self.size +=1
+       
 
     def pop(self):
         if (self.size > 1):
