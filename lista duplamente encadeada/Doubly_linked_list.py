@@ -75,7 +75,13 @@ class Doubly_linked_list:
 
 
     def index(self, index):
-        pass
+        pointer = self.list
+        if (index >= 0  and index < self.size):
+            for cont in range(index):
+                pointer = pointer.right
+            return pointer.value
+        else:
+            return "Index Invalido"
 
     def __repr__(self):
         if (self.size > 0):
