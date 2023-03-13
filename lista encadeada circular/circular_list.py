@@ -49,7 +49,7 @@ class circular_list:
             pointer.next = self.first
             self.last = pointer
             self.size -= 1
-        else:
+        elif (self.size == 1):
             self.first = None
             self.last = None
             self.size -= 1
