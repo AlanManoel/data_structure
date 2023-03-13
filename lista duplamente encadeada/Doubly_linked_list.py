@@ -55,7 +55,24 @@ class Doubly_linked_list:
             self.size -= 1
         
     def remove(self,  value):
-        pass
+        if (self.size > 0):
+            pointer = self.list
+            if (pointer.value == value):
+                pointer = pointer.right
+                self.list = pointer
+                self.size -= 1
+            else:
+                while(pointer.right):
+                    if (pointer.right.value == value):
+                        if (pointer.right.right):
+                            pointer.right.right.left = pointer
+                            pointer.right = pointer.right.right
+                            self.size -= 1
+                        else:
+                            self.pop()
+                    else:
+                        pointer = pointer.right
+
 
     def index(self, index):
         pass
@@ -78,3 +95,4 @@ class Doubly_linked_list:
     def __len__(self):
         '''Função para retorna o tamanho da lista'''
         return self.size
+
