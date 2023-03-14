@@ -7,14 +7,30 @@ class Queue():
         self.size = 0
     
     def add(self, value): #Função de adicionar elemento na fila
-        node = Node(value) #Vou jogar o novo elemento dentro de um Nó
-        self.size += 1
-        if (self.last is None):
-            self.last = node
-        else:
+        if (self.start):
+            node = Node(value)
             self.last.next = node
             self.last = node
-        if (self.start is None):
-            self.start = node
+            self.size += 1
+        else:
+            self.start = self.last = Node(value)
+            self.size += 1
+    
+    def __repr__(self):
+        if (self.size > 0):
+            pointer = self.start
+            r = ""
+            while(pointer):
+                r += str(pointer.value) + " "
+                pointer = pointer.next
+            return r
+        else:
+            return ""
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __len__(self):
+        return self.size
 
 #Não terminado
