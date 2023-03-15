@@ -16,6 +16,19 @@ class Queue():
             self.start = self.last = Node(value)
             self.size += 1
     
+    def remove(self):
+        if (self.size>1):
+            pointer = self.start
+            while(pointer.next != self.last):
+                pointer = pointer.next
+            pointer.next = None
+            self.last = pointer
+            self.size -= 1
+        elif (self.size == 1):
+            self.start = None
+            self.last = None
+            self.size -= 1
+
     def __repr__(self):
         if (self.size > 0):
             pointer = self.start
@@ -32,5 +45,3 @@ class Queue():
 
     def __len__(self):
         return self.size
-
-#Não terminado
