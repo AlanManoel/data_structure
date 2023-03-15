@@ -13,19 +13,17 @@ class Stack(): #Pilha
     
     def pop(self): #Função para remover elemento da pilha
         if self.size != 0:
-            node = self.top #Referencia "node" vai receber o Nó que esta no topo
             self.top = self.top.next #O proximo do Nó, vai receber um None, assim faz com que o ultimo elemento seja excluido
-            self.size -= 1 #Tamanho do Nó diminui menos um.
-            return node
+            self.size -= 1 #Tamanho do Nó diminui menos um
         else:
             print('Error, no element on stack.')
-            
+
     def peek(self):
         if self.size != 0:
-            node = self.top
-            while (node is not None):
-                print(node.value)
-                node = node.next
+            pointer = self.top
+            while (pointer):
+                print(pointer.value)
+                pointer = pointer.next
         else:
             print('Error, The stack is empty')
     
