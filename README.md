@@ -1,7 +1,7 @@
 # Estrutura de dados
-<center>
+<div align="center">
 <img src="https://github.com/AlanManoel.png" height=120>
-</center>
+</div>
 
 <hr>
 <ur>
