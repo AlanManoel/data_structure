@@ -7,6 +7,6 @@ a.append(3)
 a.append(4)
 a.append(3)
 
-print(a)
+print(a[8])
 
 print(len(a))

@@ -66,16 +66,16 @@ class lista:
                         ponteiro = ponteiro.next
         else:
             print("\033[31mLista vazia\033[m")
-    
-    def index(self, index):
-        ponteiro = self.lista
+        
+    def __getitem__(self, index):
+        pointer = self.lista
         if (index >= 0 and index < self.size):
             for cont in range(index):
-                ponteiro = ponteiro.next
-            print(ponteiro.value)
+                pointer = pointer.next
+            return pointer.value
         else:
-            print("\033[31mIndex invalido\033[m")
-        
+            return "Not index in list"
+
     def __len__(self):
         return self.size
     
@@ -91,3 +91,5 @@ class lista:
 
     def __str__(self):
         return self.__repr__()
+    
+    
