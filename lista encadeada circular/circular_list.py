@@ -77,15 +77,15 @@ class circular_list:
                     else:
                         pointer = pointer.next
 
-    def index(self, index):
+    def __getitem__(self, index):
         '''Função para retorna o valor do index'''
         if ( 0 <= index < self.size ):
             pointer = self.first
-            for cont in range(index):
+            for count in range(index):
                 pointer = pointer.next
-            print(pointer.value)
+            return pointer.value
         else:
-            print("Index Invalido")
+            return "Not index in list"
 
     def __repr__(self):
         '''Função para retorna a lista'''
