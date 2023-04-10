@@ -10,5 +10,6 @@
 <li>Lista encadeada</li>
 <li>Lista duplamente encadeada</li>
 <li>Lista encadeada circular</li>
+<li>Árvore binária</li>
 </ur>
 <hr>
