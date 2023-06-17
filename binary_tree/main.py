@@ -1,11 +1,6 @@
 from Binary_tree import *
 
-# # a = 2
-
-# # print('\t'*0, 'a')
-
 a = Binary_tree(20)
-a.insert(17)
 a.insert(17)
 a.insert(24)
 a.insert(16)
@@ -13,22 +8,22 @@ a.insert(18)
 a.insert(23)
 a.insert(26)
 
-print('pre ordem')
-a.pre_order()
-print()
+# print('pre ordem')
+# a.pre_order()
+# print()
 
-print('em ordem')
-a.in_order()
-print()
+# print('em ordem')
+# a.in_order()
+# print()
 
-print('pos ordem')
-a.post_order()
-print()
+# print('pos ordem')
+# a.post_order()
+# print()
 
-print("Maior valor: ")
-a.max_value()
-print("Menor valor: ")
-a.min_value()
+# print("Maior valor: ")
+# a.max_value()
+# print("Menor valor: ")
+# a.min_value()
 
 # pré-ordem a seqüência árvore seria 20, 17, 16, 18, 24, 23, 26; 
 # intra-ordem, 16, 17, 18, 20, 23, 24, 26; 
@@ -37,3 +32,4 @@ a.min_value()
 #                 (20)
 #       (17)               (24)
 # (16)      (18)      (23)      (26)
+print(a.search(16))
