@@ -110,3 +110,4 @@ class circular_list:
         '''Função que ira retorna o tamanho da lista'''
         return self.size
     
+
