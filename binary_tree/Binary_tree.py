@@ -96,5 +96,14 @@ class Binary_tree:
                 pointer = pointer.left
             print(pointer)
 
+    def print_binary_tree(self):
+        self.recursion_binary_tree(self.root)
+    
+    def recursion_binary_tree(self, node, level=0):
+        if (node):
+            self.recursion_binary_tree(node.right, level + 1)
+            print(f'{"    " * level} ({node.value})')
+            self.recursion_binary_tree(node.left, level + 1)
+
     def __len__(self):
         return self.size
