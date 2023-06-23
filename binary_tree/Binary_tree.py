@@ -81,22 +81,42 @@ class Binary_tree:
             if (height_right > height_left):
                 return height_right + 1
             return height_left + 1
-        
-    def max_value(self):
-        if (self.root):
-            pointer = self.root
-            while(pointer.right):
-                pointer = pointer.right
-            print(pointer)
     
-    def min_value(self):
-        if (self.root):
+    def max_value(self, pointer=None):
+        if not(pointer):
             pointer = self.root
-            while(pointer.left):
-                pointer = pointer.left
-            print(pointer)
+        while(pointer.right):
+            pointer = pointer.right
+        return pointer.value
 
-    def print_binary_tree(self):
+    def min_value(self, pointer=None):
+        if not(pointer):
+            pointer = self.root
+        while(pointer.left):
+            pointer = pointer.left
+        return pointer.value
+
+    def remove(self, value, node=None):
+        if not(node):
+            node = self.root
+        # if node is None:
+        #     return node
+        if value < node.value:
+            node.left = self.remove(value, node.left)
+        elif value > node.value:
+            node.right = self.remove(value, node.right)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                substitute = self.min_value(node.right)
+                node.value = substitute
+                node.right = self.remove(substitute, node.right)
+        return node
+
+    def print_tree(self):
         self.recursion_binary_tree(self.root)
     
     def recursion_binary_tree(self, node, level=0):
