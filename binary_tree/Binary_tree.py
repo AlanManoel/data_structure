@@ -1,4 +1,5 @@
 from Node import *
+from queue import Queue
 
 class Binary_tree:
     def __init__(self, value = None):
@@ -10,33 +11,40 @@ class Binary_tree:
             self.root = None
     
     def insert(self, value):
-        try:
-            v = int(value)
-        except:
-            print('Somente numeros')
-        else:
-            relative = None
-            pointer = self.root
-            while (pointer):
-                if (pointer.value == value):
-                    print('O numero já esta na arvore')
-                    break
-                else:
-                    relative = pointer
-                    if (value < pointer.value):
-                        pointer = pointer.left
-                    else:
-                        pointer = pointer.right   
-            if not (relative):
-                self.root = Node(value)
-                self.size += 1
-            elif (value < relative.value):
-                relative.left = Node(value)
-                self.size += 1
+        relative = None
+        pointer = self.root
+        while (pointer):
+            if (pointer.value == value):
+                print('O numero já esta na arvore')
+                break
             else:
-                relative.right = Node(value)
-                self.size += 1
+                relative = pointer
+                if (value < pointer.value):
+                    pointer = pointer.left
+                else:
+                    pointer = pointer.right   
+        if not (relative):
+            self.root = Node(value)
+            self.size += 1
+        elif (value < relative.value):
+            relative.left = Node(value)
+            self.size += 1
+        else:
+            relative.right = Node(value)
+            self.size += 1
 
+    def level_route(self, node=None):
+        if not(node):
+            node = self.root
+        queue = Queue()
+        queue.put(node)
+        while queue.qsize():
+            node = queue.get()
+            if node.left:
+                queue.put(node.left)
+            if node.right:
+                queue.put(node.right)
+            print(node, end=" ")
 
     def pre_order(self, node = None):
         if (self.root):
@@ -99,8 +107,6 @@ class Binary_tree:
     def remove(self, value, node=None):
         if not(node):
             node = self.root
-        # if node is None:
-        #     return node
         if value < node.value:
             node.left = self.remove(value, node.left)
         elif value > node.value:
@@ -111,9 +117,9 @@ class Binary_tree:
             elif node.right is None:
                 return node.left
             else:
-                substitute = self.min_value(node.right)
-                node.value = substitute
-                node.right = self.remove(substitute, node.right)
+                pointer = self.min_value(node.right)
+                node.value = pointer
+                node.right = self.remove(pointer, node.right)
         return node
 
     def print_tree(self):
@@ -124,6 +130,34 @@ class Binary_tree:
             self.recursion_binary_tree(node.right, level + 1)
             print(f'{"    " * level} ({node.value})')
             self.recursion_binary_tree(node.left, level + 1)
+    
+            
+    # def bin(self, node=None):
+    #     if not node:
+    #         node = self.root
+    #     queue = Queue()
+    #     queue.put(node)
+    #     level = self.height()
+    #     while (queue.qsize()):
+    #         level_nodes = []
+    #         level -= 1
+    #         for i in range(queue.qsize()):
+    #             node = queue.get()
+    #             if node:
+    #                 level_nodes.append(node.value)
+    #                 queue.put(node.left)
+    #                 queue.put(node.right)
+    #             else:
+    #                 level_nodes.append(None)
+
+    #         print("  " * level, end="")
+
+    #         for value in level_nodes:
+    #             if value is None:
+    #                 print("    ", end="")
+    #             else:
+    #                 print(f"({value})", end="")
+    #         print()
 
     def __len__(self):
         return self.size
