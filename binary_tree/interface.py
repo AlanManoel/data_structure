@@ -5,7 +5,7 @@ from Binary_tree import *
 
 class Interface_binary_tree:
     def __init__(self):
-        self.tree = Binary_tree() #A Arvore binaria
+        self.tree = Binary_AVL() #A Arvore binaria
 
         self.app = Tk() #A Aplicação
         self.app.title('Árvore Binaria AVL')

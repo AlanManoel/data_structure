@@ -11,27 +11,28 @@ class Binary_tree:
             self.root = None
     
     def insert(self, value):
-        relative = None
-        pointer = self.root
-        while (pointer):
-            if (pointer.value == value):
-                print('O numero já esta na arvore')
-                break
-            else:
-                relative = pointer
-                if (value < pointer.value):
-                    pointer = pointer.left
+        if not(self.search(value)):
+            relative = None
+            pointer = self.root
+            while (pointer):
+                if (pointer.value == value):
+                    return False
+                    break
                 else:
-                    pointer = pointer.right   
-        if not (relative):
-            self.root = Node(value)
-            self.size += 1
-        elif (value < relative.value):
-            relative.left = Node(value)
-            self.size += 1
-        else:
-            relative.right = Node(value)
-            self.size += 1
+                    relative = pointer
+                    if (value < pointer.value):
+                        pointer = pointer.left
+                    else:
+                        pointer = pointer.right   
+            if not (relative):
+                self.root = Node(value)
+                self.size += 1
+            elif (value < relative.value):
+                relative.left = Node(value)
+                self.size += 1
+            else:
+                relative.right = Node(value)
+                self.size += 1
 
     def level_route(self, node=None):
         if not(node):
@@ -80,8 +81,8 @@ class Binary_tree:
         if (self.root):
             if not(node):
                 node = self.root
-            height_left = 0
-            height_right = 0
+            height_left = -1
+            height_right = -1
             if (node.left):
                 height_left =  self.height(node.left)
             if (node.right):
@@ -122,6 +123,18 @@ class Binary_tree:
                 node.right = self.remove(pointer, node.right)
         return node
 
+    def search(self, value):
+        return self.recursive_search(value, self.root)
+
+    def recursive_search(self, value, node):
+        if not(node):
+            return False
+        if node.value == value:
+            return True
+        elif value < node.value:
+            return self.recursive_search(value, node.left)
+        return self.recursive_search(value, node.right)
+
     def print_tree(self):
         self.recursion_binary_tree(self.root)
     
@@ -130,34 +143,125 @@ class Binary_tree:
             self.recursion_binary_tree(node.right, level + 1)
             print(f'{"    " * level} ({node.value})')
             self.recursion_binary_tree(node.left, level + 1)
-    
-            
-    # def bin(self, node=None):
-    #     if not node:
-    #         node = self.root
-    #     queue = Queue()
-    #     queue.put(node)
-    #     level = self.height()
-    #     while (queue.qsize()):
-    #         level_nodes = []
-    #         level -= 1
-    #         for i in range(queue.qsize()):
-    #             node = queue.get()
-    #             if node:
-    #                 level_nodes.append(node.value)
-    #                 queue.put(node.left)
-    #                 queue.put(node.right)
-    #             else:
-    #                 level_nodes.append(None)
-
-    #         print("  " * level, end="")
-
-    #         for value in level_nodes:
-    #             if value is None:
-    #                 print("    ", end="")
-    #             else:
-    #                 print(f"({value})", end="")
-    #         print()
 
     def __len__(self):
         return self.size
+
+
+class Binary_AVL( Binary_tree):
+
+    def insert(self, value):
+        if not(self.search(value)):
+            relative = None
+            pointer = self.root
+            while (pointer):
+                if (pointer.value == value):
+                    return False
+                else:
+                    relative = pointer
+                    if (value < pointer.value):
+                        pointer = pointer.left
+                    else:
+                        pointer = pointer.right   
+            if not (relative):
+                self.root = Node(value)
+                self.size += 1
+            elif (value < relative.value):
+                relative.left = Node(value)
+                self.size += 1
+            else:
+                relative.right = Node(value)
+                self.size += 1
+        #Verificar o balanceamento
+        self.check_balance(self.root, self.root)
+
+    def rotation_LL(self, father, node):
+        pointer = node.left 
+        node.left = pointer.right
+        pointer.right = node
+        if node == self.root:
+            self.root = pointer
+        else:
+            if (father.left == node):
+                father.left = pointer
+            else:
+                father.right = pointer
+        return pointer
+    
+    def rotation_RR(self, father, node):
+        pointer = node.right
+        node.right = pointer.left
+        pointer.left = node
+        if node == self.root:
+            self.root = pointer
+        else:
+            if (father.left == node):
+                father.left = pointer
+            else:
+                father.right = pointer
+        return pointer
+    
+    def rotation_RL(self, father, node):
+        node.left = self.rotation_RR(node, node.left)
+        return self.rotation_LL(father, node)
+
+    def rotation_LR(self,father, node):
+        node.right = self.rotation_LL(node, node.right)
+        return self.rotation_RR(father, node)
+
+    def depth(self, node):
+        if not(node):
+            return 0
+        depth_left = 0
+        depth_right = 0
+        if (node.left):
+            depth_left= self.depth(node.left)
+        if (node.right):
+            depth_right= self.depth(node.right)
+        if (depth_right > depth_left):
+            return depth_right + 1
+        return (depth_left + 1)
+
+    def balancing_factor(self, node):
+        if not(node):
+            return 0
+        height_left = 0
+        height_right = 0
+        if (node.left):
+            height_left = self.depth(node.left)
+        if (node.right):
+            height_right = self.depth(node.right)
+        return (height_left - height_right )
+    
+    def execute_balance(self,father, node):
+        fb = self.balancing_factor(node)
+        if (fb < -1):
+            if (self.balancing_factor(node.right) < 0):
+                self.rotation_RR(father, node)
+            if (self.balancing_factor(node.right) > 0):
+                self.rotation_LR(father, node)
+        if (fb > 1):
+            if (self.balancing_factor(node.left) > 0):
+                self.rotation_LL(father, node)
+            if (self.balancing_factor(node.left) < 0):
+                self.rotation_RL(father, node)
+        return node
+
+    def check_balance(self,father, node):
+        if (node):
+            if (node.right):
+                self.check_balance(node, node.right)
+            if (node.left):
+                self.check_balance(node, node.left)
+            self.execute_balance(father, node)
+
+
+#fator = altura_node_left - altura_node_right [-1,0,1]
+
+#Se subarvore tamanho negativo e subarvore a direita negativo (LL)
+#Se subarvore tamanho positivo e subarvore a esqueda positivo (RR)
+#Se subarvore tamanho negativo e subarvore a direita positivo (LR)
+#Se subarvore tamanho positivo e subarvore a esqueda negativo (RL)
+
+
+
