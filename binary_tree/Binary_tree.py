@@ -148,7 +148,7 @@ class Binary_tree:
         return self.size
 
 
-class Binary_AVL( Binary_tree):
+class Binary_AVL(Binary_tree):
 
     def insert(self, value):
         if not(self.search(value)):
@@ -157,6 +157,7 @@ class Binary_AVL( Binary_tree):
             while (pointer):
                 if (pointer.value == value):
                     return False
+                    break
                 else:
                     relative = pointer
                     if (value < pointer.value):
@@ -172,10 +173,39 @@ class Binary_AVL( Binary_tree):
             else:
                 relative.right = Node(value)
                 self.size += 1
-        #Verificar o balanceamento
         self.check_balance(self.root, self.root)
 
-    def rotation_LL(self, father, node):
+    def remove(self, value, node=None):
+        if not(node):
+            node = self.root
+        if value < node.value:
+            node.left = self.remove(value, node.left)
+        elif value > node.value:
+            node.right = self.remove(value, node.right)
+        else:
+            if node is self.root:
+                if node.left is None:
+                    self.root = node.right
+                elif node.right is None:
+                    self.root = node.left
+                else:
+                    pointer = self.min_value(node.right)
+                    self.root.value = pointer
+                    node.right = self.remove(pointer, node.right)
+            else:
+                if node.left is None:
+                    return node.right
+                elif node.right is None:
+                    return node.left
+                else:
+                    pointer = self.min_value(node.right)
+                    node.value = pointer
+                    node.right = self.remove(pointer, node.right)
+                return node
+        self.check_balance(self.root, self.root)
+        return node
+
+    def rotation_simple_right(self, father, node): #simple a direita
         pointer = node.left 
         node.left = pointer.right
         pointer.right = node
@@ -187,8 +217,8 @@ class Binary_AVL( Binary_tree):
             else:
                 father.right = pointer
         return pointer
-    
-    def rotation_RR(self, father, node):
+        
+    def rotation_simple_left(self, father, node): #simples a esquerda
         pointer = node.right
         node.right = pointer.left
         pointer.left = node
@@ -199,16 +229,17 @@ class Binary_AVL( Binary_tree):
                 father.left = pointer
             else:
                 father.right = pointer
+            
         return pointer
     
-    def rotation_RL(self, father, node):
-        node.left = self.rotation_RR(node, node.left)
-        return self.rotation_LL(father, node)
-
-    def rotation_LR(self,father, node):
-        node.right = self.rotation_LL(node, node.right)
-        return self.rotation_RR(father, node)
-
+    def rotation_double_left(self, father, node): 
+        self.rotation_simple_right(node, node.right)
+        return self.rotation_simple_left(father, node)
+    
+    def rotation_double_right(self,father, node): 
+        self.rotation_simple_left(node, node.left)
+        return self.rotation_simple_right(father, node)
+    
     def depth(self, node):
         if not(node):
             return 0
@@ -225,43 +256,34 @@ class Binary_AVL( Binary_tree):
     def balancing_factor(self, node):
         if not(node):
             return 0
-        height_left = 0
-        height_right = 0
-        if (node.left):
-            height_left = self.depth(node.left)
-        if (node.right):
-            height_right = self.depth(node.right)
-        return (height_left - height_right )
+        else:
+            height_left = 0
+            height_right = 0
+            if (node.left):
+                height_left = self.depth(node.left)
+            if (node.right):
+                height_right = self.depth(node.right)
+            return (height_left - height_right )
     
-    def execute_balance(self,father, node):
+    def execute_balance(self,father, node, parent = None):
         fb = self.balancing_factor(node)
-        if (fb < -1):
-            if (self.balancing_factor(node.right) < 0):
-                self.rotation_RR(father, node)
-            if (self.balancing_factor(node.right) > 0):
-                self.rotation_LR(father, node)
         if (fb > 1):
             if (self.balancing_factor(node.left) > 0):
-                self.rotation_LL(father, node)
+                self.rotation_simple_right(father, node)
             if (self.balancing_factor(node.left) < 0):
-                self.rotation_RL(father, node)
+                self.rotation_double_right(father, node)
+        if (fb < -1):
+            if (self.balancing_factor(node.right) <= 0):
+                self.rotation_simple_left(father, node)
+            if (self.balancing_factor(node.right) > 0):
+                self.rotation_double_left(father, node)
         return node
 
-    def check_balance(self,father, node):
+    def check_balance(self, father, node):
         if (node):
             if (node.right):
                 self.check_balance(node, node.right)
             if (node.left):
-                self.check_balance(node, node.left)
-            self.execute_balance(father, node)
-
-
-#fator = altura_node_left - altura_node_right [-1,0,1]
-
-#Se subarvore tamanho negativo e subarvore a direita negativo (LL)
-#Se subarvore tamanho positivo e subarvore a esqueda positivo (RR)
-#Se subarvore tamanho negativo e subarvore a direita positivo (LR)
-#Se subarvore tamanho positivo e subarvore a esqueda negativo (RL)
-
-
-
+                 self.check_balance(node, node.left)
+        return self.execute_balance(father, node)
+ 

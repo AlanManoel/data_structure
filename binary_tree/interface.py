@@ -77,7 +77,5 @@ class Interface_binary_tree:
                 self.canvas.create_line(x, y+12, x_right, y_right-12, arrow=LAST)
                 self.mostrar_arvore(node.right, x_right, y_right, espaco//2)
 
-
-
 #Iniciando a aplicação
 gui = Interface_binary_tree()

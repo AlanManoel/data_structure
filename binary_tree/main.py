@@ -1,17 +1,41 @@
 from Binary_tree import *
 
-# a = Binary_tree(20)
-# a.insert(17)
-# a.insert(24)
-# # a.insert(16)
-# # a.insert(18)
-# # a.insert(23)
-# # a.insert(26)p
 
-# print(a.height())
+b= Binary_AVL(15)
+b.insert(27)
+b.insert(49)
+b.insert(10)
+b.insert(8)
+b.insert(67)
+b.insert(59) 
+b.insert(9)
+b.insert(13)
+b.insert(20)
+b.insert(14)
+
+
+b.remove(10) #Certo
+b.remove(13)#Certo
+# b.remove(20)
+# b.remove(59)
+
+b.print_tree()
+
+
+
+
+# a = Binary_tree(20)
+# a.insert(9)
+# a.insert(27)
+# a.insert(8)
+# a.insert(14)
+# a.insert(59)
+# a.insert(49)
+# a.insert(67)
+# a.remove(59)
 
 # a.print_tree()
-# print()
+# # print()
 # print(a.height())
 
 
@@ -69,28 +93,8 @@ from Binary_tree import *
 # ---(17)-----(24)
 # (16)-(12)-(12)-(12)
 
-b= Binary_AVL(15)
-b.insert(27)
-b.insert(49)
-b.insert(10)
-b.insert(8)
-b.insert(67)
-b.insert(59)
-b.insert(9)
-b.insert(13)
-b.insert(20)
-b.insert(14)
 
-# b = Binary_AVL(50)
-# b.insert(70)
-# b.insert(30)
-# b.insert(10)
-# b.insert(40)
-# b.insert(35)
-
-# print(b.depth(b.root))
 
 # print(b.balancing_factor(b.root.left))
 # b.rotation_LL(b.root)
 # b.execute_balance(b.root)
-b.print_tree()
