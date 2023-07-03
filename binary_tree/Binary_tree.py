@@ -51,31 +51,43 @@ class Binary_tree:
         if (self.root):
             if not (node):
                 node = self.root
-            print(node.value, end=' ')
+            return_pre = ""
+            # print(node.value, end=' ')
+            return_pre += str(node.value) + " "
             if (node.left):
-                self.pre_order(node.left)
+                return_pre += self.pre_order(node.left)
             if (node.right):
-                self.pre_order(node.right)
-    
+                return_pre += self.pre_order(node.right)
+            return return_pre
+        return "Empty tree"
+            
     def in_order(self, node = None):
         if(self.root):
             if not (node):
                 node = self.root
+            return_in = ''
             if (node.left):
-                self.in_order(node.left)
-            print(node.value, end=' ')
+                return_in+= self.in_order(node.left)
+            # print(node.value, end=' ')
+            return_in += str(node.value) + " "
             if (node.right):
-                self.in_order(node.right)
+                return_in += self.in_order(node.right)
+            return return_in
+        return "Empty tree"
 
     def post_order(self, node = None):
         if (self.root):
             if not(node):
                 node = self.root
+            return_post = ''
             if (node.left):
-                self.post_order(node.left)
+                return_post += self.post_order(node.left)
             if (node.right):
-                self.post_order(node.right)
-            print(node.value, end=' ')
+                return_post += self.post_order(node.right)
+            # print(node.value, end=' ')
+            return_post += str(node.value) + " "
+            return return_post
+        return "Empty tree"
     
     def height(self, node = None):
         if (self.root):
@@ -94,16 +106,18 @@ class Binary_tree:
     def max_value(self, pointer=None):
         if not(pointer):
             pointer = self.root
-        while(pointer.right):
-            pointer = pointer.right
-        return pointer.value
+        if pointer:
+            while(pointer.right):
+                pointer = pointer.right
+            return pointer.value
 
     def min_value(self, pointer=None):
         if not(pointer):
             pointer = self.root
-        while(pointer.left):
-            pointer = pointer.left
-        return pointer.value
+        if pointer:
+            while(pointer.left):
+                pointer = pointer.left
+            return pointer.value
 
     def remove(self, value, node=None):
         if not(node):
@@ -176,35 +190,38 @@ class Binary_AVL(Binary_tree):
         self.check_balance(self.root, self.root)
 
     def remove(self, value, node=None):
-        if not(node):
-            node = self.root
-        if value < node.value:
-            node.left = self.remove(value, node.left)
-        elif value > node.value:
-            node.right = self.remove(value, node.right)
-        else:
-            if node is self.root:
-                if node.left is None:
-                    self.root = node.right
-                elif node.right is None:
-                    self.root = node.left
-                else:
-                    pointer = self.min_value(node.right)
-                    self.root.value = pointer
-                    node.right = self.remove(pointer, node.right)
+        self.size -=1
+        if (self.search(value)):
+            if not(node):
+                node = self.root
+            if value < node.value:
+                node.left = self.remove(value, node.left)
+            elif value > node.value:
+                node.right = self.remove(value, node.right)
             else:
-                if node.left is None:
-                    return node.right
-                elif node.right is None:
-                    return node.left
+                if node is self.root:
+                    if node.left is None:
+                        self.root = node.right
+                    elif node.right is None:
+                        self.root = node.left
+                    else:
+                        pointer = self.min_value(node.right)
+                        self.root.value = pointer
+                        node.right = self.remove(pointer, node.right)
                 else:
-                    pointer = self.min_value(node.right)
-                    node.value = pointer
-                    node.right = self.remove(pointer, node.right)
-                return node
-        self.check_balance(self.root, self.root)
-        return node
-
+                    if node.left is None:
+                        return node.right
+                    elif node.right is None:
+                        return node.left
+                    else:
+                        pointer = self.min_value(node.right)
+                        node.value = pointer
+                        node.right = self.remove(pointer, node.right)
+                    return node
+            if node is self.root:
+                self.check_balance(self.root, self.root)
+            return node
+            
     def rotation_simple_right(self, father, node): #simple a direita
         pointer = node.left 
         node.left = pointer.right
@@ -265,18 +282,18 @@ class Binary_AVL(Binary_tree):
                 height_right = self.depth(node.right)
             return (height_left - height_right )
     
-    def execute_balance(self,father, node, parent = None):
+    def execute_balance(self,father, node):
         fb = self.balancing_factor(node)
         if (fb > 1):
-            if (self.balancing_factor(node.left) > 0):
-                self.rotation_simple_right(father, node)
+            if (self.balancing_factor(node.left) >= 0):
+                return self.rotation_simple_right(father, node)
             if (self.balancing_factor(node.left) < 0):
-                self.rotation_double_right(father, node)
+                return self.rotation_double_right(father, node)
         if (fb < -1):
             if (self.balancing_factor(node.right) <= 0):
-                self.rotation_simple_left(father, node)
+                return self.rotation_simple_left(father, node)
             if (self.balancing_factor(node.right) > 0):
-                self.rotation_double_left(father, node)
+                return self.rotation_double_left(father, node)
         return node
 
     def check_balance(self, father, node):

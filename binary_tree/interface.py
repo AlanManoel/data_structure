@@ -1,81 +1,153 @@
 from tkinter import *
+from tkinter import messagebox
 from Binary_tree import *
 
 
 
-class Interface_binary_tree:
+class Interface_tree_avl:
     def __init__(self):
         self.tree = Binary_AVL() #A Arvore binaria
 
         self.app = Tk() #A Aplicação
         self.app.title('Árvore Binaria AVL')
 
+        self.main_font = ('Times New Roman', 12)
+
         #Frame que vai conter a arvore binaria
         self.frame_da_tree = Frame(self.app)
-        self.frame_da_tree.pack(side=LEFT)
+        self.frame_da_tree.pack(side=TOP)
 
-        self.title_frame = Label(self.frame_da_tree, text="Árvore Binaria AVL")
+        self.title_frame = Label(self.frame_da_tree, text="Árvore AVL", font=('Times New Roman',15))
         self.title_frame.pack()
 
-        self.canvas = Canvas(self.frame_da_tree, width=966, height=600)
+        self.canvas = Canvas(self.frame_da_tree, width=1366, height=600)
         self.canvas.pack()
 
+        #Frame das pre ordens
+        self.frame_ordens = Frame(self.frame_da_tree)
+        self.frame_ordens.pack(side=TOP, pady=(5))
+
+        #Labels de ordens
+        self.label_pre_order = Label(self.frame_ordens, text=f'Pré Ordem: {self.tree.pre_order()}')
+        self.label_pre_order['font']= self.main_font
+        self.label_pre_order.pack(side=LEFT, padx=(0, 20))
+
+        self.label_in_order = Label(self.frame_ordens, text=f'Em Ordem: {self.tree.in_order()}')
+        self.label_in_order['font']= self.main_font
+        self.label_in_order.pack(side=LEFT, padx=(0, 20))
+
+        self.label_pos_order = Label(self.frame_ordens, text=f'Pós Ordem: {self.tree.post_order()}')
+        self.label_pos_order['font']= self.main_font
+        self.label_pos_order.pack(side=LEFT)
+        
         #Frame que vai conter os botões
         self.frame_botoes = Frame(self.app)
-        self.frame_botoes.pack(side=RIGHT)
+        self.frame_botoes.pack(side=BOTTOM, pady=(0, 5))
 
-        #Opção de adicionar
-        self.entrada_add =  Entry(self.frame_botoes)
-        self.entrada_add.pack(padx=50)
+        #Opção de adicionar e remover
+        self.entrada_number =  Entry(self.frame_botoes, width=30)
+        self.entrada_number.pack(side=LEFT, padx=(0, 20))
         
-        self.botao_add = Button(self.frame_botoes, text="Adicionar", command=self.adicionar)
-        self.botao_add.pack(pady=5)
+        #Botão de adicionar
+        self.botao_add = Button(self.frame_botoes, text="Adicionar", command=self.adicionar, width=10)
+        self.botao_add['background'] = 'yellow'
+        self.botao_add['font']= self.main_font
+        self.botao_add.pack(side=LEFT, padx=(0, 20))
 
-        #Opção de Remover
-        self.entrada_remove =  Entry(self.frame_botoes)
-        self.entrada_remove.pack(padx=50)
+        #Botão de remover
+        self.botao_remove = Button(self.frame_botoes, text="Remover", command=self.remover, width=10)
+        self.botao_remove['background'] = 'yellow'
+        self.botao_remove['font']= self.main_font
+        self.botao_remove.pack(side=LEFT, padx=(0, 20))
 
-        self.botao_remove = Button(self.frame_botoes, text="Remover", command=self.remover)
-        self.botao_remove.pack()
+        #Botão de buscar
+        self.botao_buscar = Button(self.frame_botoes, text="Buscar", command=self.buscar, width=10)
+        self.botao_buscar['background'] = 'yellow'
+        self.botao_buscar['font']= self.main_font
+        self.botao_buscar.pack(side=LEFT, padx=(0, 20))
 
-        self.app.mainloop() #Para a aplicação ficar executando direto
+        #Labels de maior e menor numeros
+        self.label_maior = Label(self.frame_botoes, text=f"Maior: {self.tree.max_value()}")
+        self.label_maior['font']= self.main_font
+        self.label_maior.pack(side=LEFT, padx=(0, 20))
+
+        self.label_menor = Label(self.frame_botoes, text=f"Menor: {self.tree.min_value()}")
+        self.label_menor['font']= self.main_font
+        self.label_menor.pack(side=LEFT, padx=(0, 20))
+        
+        #Para a aplicação ficar executando direto
+        self.app.mainloop() 
 
     def adicionar(self):
-        valor = self.entrada_add.get()
-        if (valor != ""):
-            valor = int(valor)
-            self.tree.insert(valor)
-            self.atualizar_arvore()
-        self.entrada_add.delete(0, END)
+        valor = self.entrada_number.get()
+        if (valor != ""): #Se o valor for diferente de vazio
+            try:
+                valor = int(valor) #Tratamento de erro, para caso seja digitado letras
+            except: #Caso seja digitado letra
+                messagebox.showinfo("Árvore AVL", f"Somente número pode ser adicionado.")
+            else: #Caso não seja letra
+                self.tree.insert(valor)
+                self.atualizar_arvore()
+        self.entrada_number.delete(0, END)
 
     def remover(self):
-        valor = self.entrada_remove.get()
+        valor = self.entrada_number.get()
         if (valor != ""):
-            valor = int(valor)
-            self.tree.remove(valor)
-            self.atualizar_arvore()
-        self.entrada_remove.delete(0, END)
+            try:
+                valor = int(valor)
+            except:
+                messagebox.showinfo("Árvore AVL", f"Somente número pode ser removido.")
+            else:
+                if (self.tree.search(valor)):
+                    self.tree.remove(valor)
+                    self.atualizar_arvore()
+                else:
+                    messagebox.showinfo("Árvore AVL", f"O número não existe na árvore.")
+                    
+        self.entrada_number.delete(0, END)
+
+    def buscar(self):
+        valor = self.entrada_number.get()
+        if (valor != ""):
+            try:
+                valor = int(valor)
+            except:
+                messagebox.showinfo("Árvore AVL", f"Somente número pode ser buscado.")
+            else:
+                if (self.tree.search(valor)):
+                    messagebox.showinfo("Árvore AVL", f"O número {valor} está na árvore")
+                else:
+                    messagebox.showinfo("Árvore AVL", f"O número {valor} não está na árvore")
+        self.entrada_number.delete(0, END)
 
     def atualizar_arvore(self):
         self.canvas.delete("all")
-        self.mostrar_arvore(self.tree.root, 483, 60, 50)
+        self.label_maior.config(text=f"Maior: {self.tree.max_value()}")
+        self.label_menor.config(text=f"Menor: {self.tree.min_value()}")
+
+        self.label_pre_order.config(text=f'Pré Ordem: {self.tree.pre_order()}')
+        self.label_in_order.config(text=f'Em Ordem: {self.tree.in_order()}')
+        self.label_pos_order.config(text=f'Pós Ordem: {self.tree.post_order()}')
+
+        self.mostrar_arvore(self.tree.root, 683, 60, 120)
 
     def mostrar_arvore(self, node, x, y, espaco):
         if node:
             self.canvas.create_oval(x-12, y-12, x+12, y+12, fill="yellow")
             self.canvas.create_text(x, y, text=str(node.value), fill="black")
+            self.canvas.create_text(x, y+20, text="Fb:"+str(self.tree.balancing_factor(node)), font=("Times New Roman", 8))
 
             if node.left:
-                x_left = x - (espaco)
+                x_left = x - espaco
                 y_left = y + 50
-                self.canvas.create_line(x, y+12, x_left, y_left-12, arrow=LAST)
+                self.canvas.create_line(x, y+25, x_left, y_left-12, arrow=LAST)
                 self.mostrar_arvore(node.left, x_left, y_left, espaco//2)
 
             if node.right:
-                x_right = x + (espaco)
+                x_right = x + espaco
                 y_right = y + 50
-                self.canvas.create_line(x, y+12, x_right, y_right-12, arrow=LAST)
+                self.canvas.create_line(x, y+25, x_right, y_right-12, arrow=LAST)
                 self.mostrar_arvore(node.right, x_right, y_right, espaco//2)
 
 #Iniciando a aplicação
-gui = Interface_binary_tree()
+gui = Interface_tree_avl()

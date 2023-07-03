@@ -14,14 +14,26 @@ b.insert(20)
 b.insert(14)
 
 
-b.remove(10) #Certo
-b.remove(13)#Certo
-# b.remove(20)
+# b.remove(10) #Certo
+# b.remove(13)#Certo
+# b.remove(49)
 # b.remove(59)
+# b.remove(27)
+# b.remove(20)
+# b.remove(8)
 
 b.print_tree()
+# print(b.in_order())
+# print(b.post_order())
+# print(b.pre_order())
+# 15 10 8 9 13 14 27 20 59 49 67 
 
 
+# print(b.max_value())
+
+# c = Binary_AVL()
+
+# print(c.max_value())
 
 
 # a = Binary_tree(20)
