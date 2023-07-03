@@ -4,16 +4,33 @@
 </div>
 
 <hr>
-<ur>
-<li>Fila</li>
-<li>Pilha</li>
-<li>Lista encadeada</li>
-<li>Lista duplamente encadeada</li>
-<li>Lista encadeada circular</li>
+<details>
+<summary>Fila</summary>
+<blockquote> Interface ainda não foi implementada </blockquote>
+</details>
+
+<details>
+<summary>Pilha</summary>
+<blockquote>Interface ainda não foi implementada.</blockquote>
+</details>
+
+<details>
+<summary>Lista encadeada</summary>
+<blockquote>Interface ainda não foi implementada.</blockquote>
+</details>
+
+<details>
+<summary>Lista duplamente encadeada</summary>
+<blockquote>Interface ainda não foi implementada.</blockquote>
+</details>
+
+<details>
+<summary>Lista encadeada circular</summary>
+<blockquote>Interface ainda não foi implementada.</blockquote>
+</details>
+
 <details>
   <summary>Árvore AVL</summary>
-  <p>Prt Sc da execução da árvore AVL usando a biblioteca do python(Tkinter).</p>
-  <img src="./images/avl.png" height="200px">
+  <blockquote>Prt Sc da execução da árvore AVL usando a biblioteca do python(Tkinter).</blockquote>
+  <blockquote><img src="./images/avl.png"></blockquote>
 </details>
-</ur>
-<hr>
