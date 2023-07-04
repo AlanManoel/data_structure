@@ -166,26 +166,25 @@ class Binary_AVL(Binary_tree):
 
     def insert(self, value):
         if not(self.search(value)):
-            relative = None
+            father = None
             pointer = self.root
             while (pointer):
                 if (pointer.value == value):
                     return False
-                    break
                 else:
-                    relative = pointer
+                    father = pointer
                     if (value < pointer.value):
                         pointer = pointer.left
                     else:
                         pointer = pointer.right   
-            if not (relative):
+            if not (father):
                 self.root = Node(value)
                 self.size += 1
-            elif (value < relative.value):
-                relative.left = Node(value)
+            elif (value < father.value):
+                father.left = Node(value)
                 self.size += 1
             else:
-                relative.right = Node(value)
+                father.right = Node(value)
                 self.size += 1
         self.check_balance(self.root, self.root)
 
@@ -246,7 +245,6 @@ class Binary_AVL(Binary_tree):
                 father.left = pointer
             else:
                 father.right = pointer
-            
         return pointer
     
     def rotation_double_left(self, father, node): 
@@ -282,7 +280,7 @@ class Binary_AVL(Binary_tree):
                 height_right = self.depth(node.right)
             return (height_left - height_right )
     
-    def execute_balance(self,father, node):
+    def execute_balance(self, father, node):
         fb = self.balancing_factor(node)
         if (fb > 1):
             if (self.balancing_factor(node.left) >= 0):

@@ -14,6 +14,7 @@ b.insert(20)
 b.insert(14)
 
 
+
 # b.remove(10) #Certo
 # b.remove(13)#Certo
 # b.remove(49)

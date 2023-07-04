@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
-from Binary_tree import *
-
+from Binary_tree import * 
+from time import sleep
 
 
 class Interface_tree_avl:
@@ -81,15 +81,17 @@ class Interface_tree_avl:
     def adicionar(self):
         valor = self.entrada_number.get()
         if (valor != ""): #Se o valor for diferente de vazio
-            try:
-                valor = int(valor) #Tratamento de erro, para caso seja digitado letras
-            except: #Caso seja digitado letra
-                messagebox.showinfo("Árvore AVL", f"Somente número pode ser adicionado.")
-            else: #Caso não seja letra
-                self.tree.insert(valor)
-                self.atualizar_arvore()
+            valores = valor.split(',')
+            for numero in valores:
+                try:
+                    numero = int(numero) #Tratamento de erro, para caso seja digitado letras
+                except: #Caso seja digitado letra
+                    pass
+                else: #Caso não seja letra
+                    self.tree.insert(numero)
+                    self.atualizar_arvore()
         self.entrada_number.delete(0, END)
-
+   
     def remover(self):
         valor = self.entrada_number.get()
         if (valor != ""):
@@ -115,7 +117,8 @@ class Interface_tree_avl:
                 messagebox.showinfo("Árvore AVL", f"Somente número pode ser buscado.")
             else:
                 if (self.tree.search(valor)):
-                    messagebox.showinfo("Árvore AVL", f"O número {valor} está na árvore")
+                    # messagebox.showinfo("Árvore AVL", f"O número {valor} está na árvore")
+                    self.buscar_numero(self.tree.root, valor, 683, 60, 120)
                 else:
                     messagebox.showinfo("Árvore AVL", f"O número {valor} não está na árvore")
         self.entrada_number.delete(0, END)
@@ -135,8 +138,8 @@ class Interface_tree_avl:
         if node:
             self.canvas.create_oval(x-12, y-12, x+12, y+12, fill="yellow")
             self.canvas.create_text(x, y, text=str(node.value), fill="black")
+            
             self.canvas.create_text(x, y+20, text="Fb:"+str(self.tree.balancing_factor(node)), font=("Times New Roman", 8))
-
             if node.left:
                 x_left = x - espaco
                 y_left = y + 50
@@ -148,6 +151,29 @@ class Interface_tree_avl:
                 y_right = y + 50
                 self.canvas.create_line(x, y+25, x_right, y_right-12, arrow=LAST)
                 self.mostrar_arvore(node.right, x_right, y_right, espaco//2)
+    
+    def buscar_numero(self, node, valor, x, y, espaco):
+        if valor == node.value:
+            cor = 'gray'
+        else:
+            cor = 'yellow'
+        if node:
+            
+            self.canvas.create_oval(x-12, y-12, x+12, y+12, fill=cor)
+            self.canvas.create_text(x, y, text=str(node.value), fill="black")
+            
+            self.canvas.create_text(x, y+20, text="Fb:"+str(self.tree.balancing_factor(node)), font=("Times New Roman", 8))
+            if node.left:
+                x_left = x - espaco
+                y_left = y + 50
+                self.canvas.create_line(x, y+25, x_left, y_left-12, arrow=LAST)
+                self.buscar_numero(node.left, valor, x_left, y_left, espaco//2)
+
+            if node.right:
+                x_right = x + espaco
+                y_right = y + 50
+                self.canvas.create_line(x, y+25, x_right, y_right-12, arrow=LAST)
+                self.buscar_numero(node.right, valor, x_right, y_right, espaco//2)
 
 #Iniciando a aplicação
 gui = Interface_tree_avl()
