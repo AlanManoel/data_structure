@@ -5,10 +5,10 @@ from Binary_tree import *
 
 class Interface_tree_avl:
     def __init__(self):
-        self.tree = Binary_AVL() #A Arvore binaria
+        self.tree = Binary_tree() #A Arvore binaria
 
         self.app = Tk() #A Aplicação
-        self.app.title('Árvore Binaria AVL')
+        self.app.title('Árvore Binaria')
 
         self.main_font = ('Times New Roman', 12)
 
@@ -16,7 +16,7 @@ class Interface_tree_avl:
         self.frame_da_tree = Frame(self.app)
         self.frame_da_tree.pack(side=TOP)
 
-        self.title_frame = Label(self.frame_da_tree, text="Árvore AVL", font=('Times New Roman',15))
+        self.title_frame = Label(self.frame_da_tree, text="Árvore Binaria", font=('Times New Roman',15))
         self.title_frame.pack()
 
         self.canvas = Canvas(self.frame_da_tree, width=1366, height=600)
@@ -97,13 +97,13 @@ class Interface_tree_avl:
             try:
                 valor = int(valor)
             except:
-                messagebox.showinfo("Árvore AVL", f"Somente número pode ser removido.")
+                messagebox.showinfo("Árvore Binaria", f"Somente número pode ser removido.")
             else:
                 if (self.tree.search(valor)):
                     self.tree.remove(valor)
                     self.atualizar_arvore()
                 else:
-                    messagebox.showinfo("Árvore AVL", f"O número não existe na árvore.")
+                    messagebox.showinfo("Árvore Binaria", f"O número não existe na árvore.")
                     
         self.entrada_number.delete(0, END)
 
@@ -113,13 +113,12 @@ class Interface_tree_avl:
             try:
                 valor = int(valor)
             except:
-                messagebox.showinfo("Árvore AVL", f"Somente número pode ser buscado.")
+                messagebox.showinfo("Árvore Binaria", f"Somente número pode ser buscado.")
             else:
                 if (self.tree.search(valor)):
-                    # messagebox.showinfo("Árvore AVL", f"O número {valor} está na árvore")
                     self.buscar_numero(self.tree.root, valor, 683, 60, 120)
                 else:
-                    messagebox.showinfo("Árvore AVL", f"O número {valor} não está na árvore")
+                    messagebox.showinfo("Árvore Binaria", f"O número {valor} não está na árvore")
         self.entrada_number.delete(0, END)
 
     def atualizar_arvore(self):
@@ -136,19 +135,17 @@ class Interface_tree_avl:
     def mostrar_arvore(self, node, x, y, espaco):
         if node:
             self.canvas.create_oval(x-12, y-12, x+12, y+12, fill="yellow")
-            self.canvas.create_text(x, y, text=str(node.value), fill="black")
-            
-            self.canvas.create_text(x, y+20, text="Fb:"+str(self.tree.balancing_factor(node)), font=("Times New Roman", 8))
+            self.canvas.create_text(x, y, text=str(node.value), fill="black")            
             if node.left:
                 x_left = x - espaco
                 y_left = y + 50
-                self.canvas.create_line(x, y+25, x_left, y_left-12, arrow=LAST)
+                self.canvas.create_line(x, y+12, x_left, y_left-12, arrow=LAST)
                 self.mostrar_arvore(node.left, x_left, y_left, espaco//2)
 
             if node.right:
                 x_right = x + espaco
                 y_right = y + 50
-                self.canvas.create_line(x, y+25, x_right, y_right-12, arrow=LAST)
+                self.canvas.create_line(x, y+12, x_right, y_right-12, arrow=LAST)
                 self.mostrar_arvore(node.right, x_right, y_right, espaco//2)
     
     def buscar_numero(self, node, valor, x, y, espaco):
@@ -160,18 +157,16 @@ class Interface_tree_avl:
             
             self.canvas.create_oval(x-12, y-12, x+12, y+12, fill=cor)
             self.canvas.create_text(x, y, text=str(node.value), fill="black")
-            
-            self.canvas.create_text(x, y+20, text="Fb:"+str(self.tree.balancing_factor(node)), font=("Times New Roman", 8))
             if node.left:
                 x_left = x - espaco
                 y_left = y + 50
-                self.canvas.create_line(x, y+25, x_left, y_left-12, arrow=LAST)
+                self.canvas.create_line(x, y+12, x_left, y_left-12, arrow=LAST)
                 self.buscar_numero(node.left, valor, x_left, y_left, espaco//2)
 
             if node.right:
                 x_right = x + espaco
                 y_right = y + 50
-                self.canvas.create_line(x, y+25, x_right, y_right-12, arrow=LAST)
+                self.canvas.create_line(x, y+12, x_right, y_right-12, arrow=LAST)
                 self.buscar_numero(node.right, valor, x_right, y_right, espaco//2)
 
 #Iniciando a aplicação
