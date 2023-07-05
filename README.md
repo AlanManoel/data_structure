@@ -34,5 +34,6 @@
   <summary>Árvore AVL</summary>
   <blockquote>Prt Sc da execução da árvore AVL usando a biblioteca do python(Tkinter).</blockquote>
   <blockquote><img src="./images/avl.png"></blockquote>
+  <blockquote>Gif da execução.</blockquote>
   <blockquote><img src="./images/AVL_gif.gif"></blockquote>
 </details>
