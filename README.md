@@ -1,9 +1,4 @@
 # Estrutura de dados
-<div align="center">
-<img src="https://github.com/AlanManoel.png" height=120>
-</div>
-
-<hr>
 <h3>Alguns print screen</h3>
 <details>
 <summary>Fila</summary>
